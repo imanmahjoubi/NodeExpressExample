@@ -4,6 +4,7 @@ var mysql = require('mysql');
 
 
 var app = express();
+var users = [];
 
 app.use(bodyParser.urlencoded({ extended: true })); // support encoded bodies
 
@@ -37,7 +38,19 @@ app.post("/submit", function (request, response) {
 
     });
     console.log(name +" "+ email + " "+ phone);
-    response.send('Thank you for signing up!');
+    response.send('thank you');
+    //response.sendFile ('/Users/imen/WebstormProjects/playlist/list.html');
+});
+connexion.connect(function (err) {
+    if (err) throw err;
+    connexion.query("select * from user", function (err, data) {
+        console.log("data", data);
+        users = data;
+        console.log('err',err)
+    });
+
+    connexion.end();
+
 });
 
 app.listen(3000, function () {
